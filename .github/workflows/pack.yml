@@ -1,0 +1,22 @@
+name: Pack
+
+on:
+  push:
+    branches:
+      - 'mc*.*.*'
+  workflow_dispatch:
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Zip
+        working-directory: src
+        run: zip ${{github.ref_name}}.zip * 
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          path: src/${{github.ref_name}}.zip
